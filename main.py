@@ -11,15 +11,19 @@ load_dotenv()
 
 db_filepath = os.getenv('PATH')
 
-breakfast = ["Pancakes", "Omelette", "Smoothie", "Fruit Salad", "Yogurt Parfait"]
-breakfast_special = ["French Toast", "Avocado Toast", "Breakfast Burrito", "Eggs Benedict", "Bagel with Lox"]
-lunch = ["Caesar Salad", "Grilled Cheese Sandwich", "Chicken Wrap", "Vegetable Stir-fry", "Quinoa Bowl"]
-lunch_special = ["Sushi", "Banh Mi", "Falafel Wrap", "Taco Salad", "Pasta Primavera"]
-noon = ["Soup and Sandwich", "Bento Box", "Rice and Beans", "Stuffed Peppers", "Curry"]
-noon_special = ["Paella", "Ramen", "Goulash", "Shakshuka", "Chili"]
-dinner = ["Steak and Potatoes", "Grilled Salmon", "Vegetable Lasagna", "Chicken Alfredo", "Stuffed Chicken Breast"]
-dinner_special = ["Lamb Chops", "Seafood Paella", "Mushroom Risotto", "Beef Wellington", "Vegetarian Stir-fry"]
+breakfast = []
+breakfast_special = []
+lunch = []
+lunch_special = []
+noon = []
+noon_special = []
+dinner = []
+dinner_special = []
 randomized_result = []
+
+# if not os.path.exists(db_filepath):
+    # with open(db_filepath, mode='w', newline='', encoding='utf-8') as csvfile:
+        # writer = csv.writer(csvfile)
 
 def randomize(meal_list):
     """The function for generating the three random meals from the lists."""
@@ -38,7 +42,42 @@ def randomize(meal_list):
             randomized_result.append(result)
     
     print(randomized_result)
-    
+
+def save_to_csv():
+    """Save the meal lists to a CSV file."""
+    with open('db.csv', mode='w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['breakfast', breakfast])
+        writer.writerow(['breakfast_special', breakfast_special])
+        writer.writerow(['lunch', lunch])
+        writer.writerow(['lunch_special', lunch_special])
+        writer.writerow(['noon', noon])
+        writer.writerow(['noon_special', noon_special])
+        writer.writerow(['dinner', dinner])
+        writer.writerow(['dinner_special', dinner_special])
+try:
+    with open("db.csv", mode='r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[0] == 'breakfast':
+                breakfast = row[1:]
+            elif row[0] == 'breakfast_special':
+                breakfast_special = row[1:]
+            elif row[0] == 'lunch':
+                lunch = row[1:]
+            elif row[0] == 'lunch_special':
+                lunch_special = row[1:]
+            elif row[0] == 'noon':
+                noon = row[1:]
+            elif row[0] == 'noon_special':
+                noon_special = row[1:]
+            elif row[0] == 'dinner':
+                dinner = row[1:]
+            elif row[0] == 'dinner_special':
+                dinner_special = row[1:]
+except:
+    save_to_csv()  # Create the CSV file if it doesn't exist
+
 @app.route('/')
 def index():
     """The start page"""
@@ -47,6 +86,7 @@ def index():
 @app.route('/meals_db', methods=['GET', 'POST'])
 def meals_db():
     """The meals database page."""
+    save_to_csv()  # Save the current state of the meal lists to CSV
     return render_template("meals_db.html",
                            breakfast=breakfast, breakfast_special=breakfast_special,
                            lunch=lunch, lunch_special=lunch_special,
@@ -74,7 +114,19 @@ def add_meal():
         dinner.append(meal_name)
     elif meal_type == 'dinner_special':
         dinner_special.append(meal_name)
+    save_to_csv()  # Save the updated meal lists to CSV
+    return redirect('/meals_db')
 
+@app.route('/delete_meal', methods=['POST'])
+def delete_meal():
+    """The function for deleting a meal from the database."""
+    meal_name = request.form.get('meal_name')
+    
+    for meal_list in [breakfast, breakfast_special, lunch, lunch_special, noon, noon_special, dinner, dinner_special]:
+        if meal_name in meal_list:
+            meal_list.remove(meal_name)
+            break
+    save_to_csv()  # Save the updated meal lists to CSV
     return redirect('/meals_db')
 
 @app.route('/random_meal', methods=['GET', 'POST'])
