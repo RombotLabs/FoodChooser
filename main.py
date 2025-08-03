@@ -40,7 +40,45 @@ def randomize(meal_list):
 @app.route('/')
 def index():
     """The start page"""
-    return "index.html"
+    return render_template("index.html")
+
+@app.route('/meals_db', methods=['GET', 'POST'])
+def meals_db():
+    """The meals database page."""
+    return render_template("meals_db.html", breakfast=breakfast, breakfast_special=breakfast_special,
+                           lunch=lunch, lunch_special=lunch_special,
+                           noon=noon, noon_special=noon_special,
+                           dinner=dinner, dinner_special=dinner_special)
+
+@app.route('/add_meal', methods=['POST'])
+def add_meal():
+    """The function for adding a meal to the database."""
+    meal_type = request.form.get('meal_type')
+    meal_name = request.form.get('meal_name')
+    
+    if meal_type == 'breakfast':
+        breakfast.append(meal_name)
+    elif meal_type == 'breakfast_special':
+        breakfast_special.append(meal_name)
+    elif meal_type == 'lunch':
+        lunch.append(meal_name)
+    elif meal_type == 'lunch_special':
+        lunch_special.append(meal_name)
+    elif meal_type == 'noon':
+        noon.append(meal_name)
+    elif meal_type == 'noon_special':
+        noon_special.append(meal_name)
+    elif meal_type == 'dinner':
+        dinner.append(meal_name)
+    elif meal_type == 'dinner_special':
+        dinner_special.append(meal_name)
+
+    return redirect('/meals_db')
+
+@app.route('/random_meal', methods=['POST'])
+def random_meal():
+    """Random meal generator."""
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True)
