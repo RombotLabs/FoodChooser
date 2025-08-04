@@ -26,35 +26,27 @@ randomized_result = []
         # writer = csv.writer(csvfile)
 
 def randomize(meal_list):
-    """The function for generating the three random meals from the lists."""
-    element_double = False
-    result = None
-    randomized_result.clear()
-    for counter in range(0,3):
-        result = random.choice(meal_list)
-        for i in range(len(randomized_result)):
-            if result == randomized_result[i]:
-                element_double = True
-                break
-        if element_double:
-            continue
-        else:
-            randomized_result.append(result)
-    
-    print(randomized_result)
+    """Randomize the meal list and store the result."""
+    global randomized_result
+    if meal_list:
+        randomized_result = random.sample(meal_list, min(3, len(meal_list)))
+    else:
+        randomized_result = ["No meals available"]
+
 
 def save_to_csv():
     """Save the meal lists to a CSV file."""
     with open('db.csv', mode='w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['breakfast', breakfast])
-        writer.writerow(['breakfast_special', breakfast_special])
-        writer.writerow(['lunch', lunch])
-        writer.writerow(['lunch_special', lunch_special])
-        writer.writerow(['noon', noon])
-        writer.writerow(['noon_special', noon_special])
-        writer.writerow(['dinner', dinner])
-        writer.writerow(['dinner_special', dinner_special])
+        writer.writerow(['breakfast'] + breakfast)
+        writer.writerow(['breakfast_special'] + breakfast_special)
+        writer.writerow(['lunch'] + lunch)
+        writer.writerow(['lunch_special'] + lunch_special)
+        writer.writerow(['noon'] + noon)
+        writer.writerow(['noon_special'] + noon_special)
+        writer.writerow(['dinner'] + dinner)
+        writer.writerow(['dinner_special'] + dinner_special)
+
 try:
     with open("db.csv", mode='r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
