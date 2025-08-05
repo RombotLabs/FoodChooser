@@ -27,7 +27,6 @@ randomized_result = []
 
 def randomize(meal_list):
     """Randomize the meal list and store the result."""
-    global randomized_result
     if meal_list:
         randomized_result = random.sample(meal_list, min(3, len(meal_list)))
     else:
