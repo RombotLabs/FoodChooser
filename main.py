@@ -113,7 +113,6 @@ def add_meal():
 def delete_meal():
     """The function for deleting a meal from the database."""
     meal_name = request.form.get('meal_name')
-    
     for meal_list in [breakfast, breakfast_special, lunch, lunch_special, noon, noon_special, dinner, dinner_special]:
         if meal_name in meal_list:
             meal_list.remove(meal_name)
@@ -130,7 +129,6 @@ def random_meal():
 def generate_meals():
     """Generate three random meals."""
     meal_type = request.form.get('meal_type')
-    
     if meal_type == 'breakfast':
         randomize(breakfast)
     elif meal_type == 'breakfast_special':
