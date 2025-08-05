@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Random meal generator</title>
+</head>
+<body>
+    <h1>Random Meal generator</h1>
+    <form action="/generate_meals" method="post">
+        <select name="meal_type" required>
+            <option value="breakfast">Breakfast</option>
+            <option value="breakfast_special">Breakfast Special</option>
+            <option value="lunch">Lunch</option>
+            <option value="lunch_special">Lunch Special</option>
+            <option value="noon">Noon</option>
+            <option value="noon_special">Noon Special</option>
+            <option value="dinner">Dinner</option>
+            <option value="dinner_special">Dinner Special</option>
+        </select>
+        <button type="submit">Generate 3 meal ideas.</button>
+    </form>
+    <br>
+    <h2>Generated Meal Ideas:</h2>
+    <div>
+        {% for meal in randomized_result %}
+            <p>- {{ meal }}</p>
+        {% endfor %}
+    </div>
+    <br>
+    <a href="/">Back to start page</a>
+</body>
+</html>
