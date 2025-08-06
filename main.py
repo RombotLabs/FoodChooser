@@ -152,4 +152,4 @@ def generate_meals():
     return redirect('/random_meal')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
