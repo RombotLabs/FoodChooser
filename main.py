@@ -27,16 +27,17 @@ randomized_result = []
 
 def randomize(meal_list):
     """Randomize the meal list and store the result."""
+    randomized_result.clear()  # Clear previous results
     if meal_list:
-        randomized_result = random.sample(meal_list, min(3, len(meal_list)))
+        randomized_result.extend(random.sample(meal_list, min(3, len(meal_list))))
     else:
-        randomized_result = ["No meals available"]
+        randomized_result.append("No meals available")
 
 
 def save_to_csv():
     """Save the meal lists to a CSV file."""
-    with open('db.csv', mode='w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
+    with open('db.csv', mode='w', newline='', encoding='utf-8') as csvfile_write:
+        writer = csv.writer(csvfile_write)
         writer.writerow(['breakfast'] + breakfast)
         writer.writerow(['breakfast_special'] + breakfast_special)
         writer.writerow(['lunch'] + lunch)
@@ -47,8 +48,8 @@ def save_to_csv():
         writer.writerow(['dinner_special'] + dinner_special)
 
 try:
-    with open("db.csv", mode='r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
+    with open("db.csv", mode='r', newline='', encoding='utf-8') as csvfile_read:
+        reader = csv.reader(csvfile_read)
         for row in reader:
             if row[0] == 'breakfast':
                 breakfast = row[1:]
@@ -66,7 +67,7 @@ try:
                 dinner = row[1:]
             elif row[0] == 'dinner_special':
                 dinner_special = row[1:]
-except:
+except IndexError:
     save_to_csv()  # Create the CSV file if it doesn't exist
 
 @app.route('/')
@@ -112,7 +113,10 @@ def add_meal():
 def delete_meal():
     """The function for deleting a meal from the database."""
     meal_name = request.form.get('meal_name')
-    for meal_list in [breakfast, breakfast_special, lunch, lunch_special, noon, noon_special, dinner, dinner_special]:
+    for meal_list in [breakfast, breakfast_special,
+                      lunch, lunch_special,
+                      noon, noon_special,
+                      dinner, dinner_special]:
         if meal_name in meal_list:
             meal_list.remove(meal_name)
             break
