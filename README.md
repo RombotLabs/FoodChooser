@@ -16,6 +16,11 @@ source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
+- Create the .env file with the session key
+example:
+```
+KEY=secret
+```
 - Launch the software
 ```
 cd flask
