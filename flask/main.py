@@ -2,8 +2,8 @@
 import csv
 import os
 import random
-from flask import Flask, render_template, redirect, request
-from dotenv import load_dotenv
+from flask import Flask, render_template, redirect, request # pylint: disable=import-error
+from dotenv import load_dotenv # pylint: disable=import-error
 
 app = Flask(__name__)
 app.secret_key = os.getenv('KEY')
