@@ -2,8 +2,9 @@
 import csv
 import os
 import random
-from flask import Flask, render_template, redirect, request # pylint: disable=import-error
 from dotenv import load_dotenv # pylint: disable=import-error
+from flask import Flask, render_template, redirect, request # pylint: disable=import-error
+
 
 load_dotenv()
 app = Flask(__name__)
