@@ -1,6 +1,11 @@
 # FoodChooser
 A web application for randomized cooking ideas.
 
+## Docker
+```
+docker build -t foodchooser-app .
+docker run -d -p 5000:5000 foodchooser-app
+```
 ## Installing (Linux recommended)
 - Install Python 3
 ```
@@ -26,5 +31,7 @@ KEY=secret
 cd flask
 gunicorn -w 4 -b 0.0.0.0:5000 main:app
 ```
+
+
 
 © Copyrights 2025 by Mafixdeveloping
