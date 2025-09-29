@@ -1,0 +1,2 @@
+- name: Security and Licence Scan
+  uses: ShiftLeftSecurity/scan-action@v1.3.0
