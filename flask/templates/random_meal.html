@@ -8,14 +8,14 @@
     <h1>Random Meal generator</h1>
     <form action="/generate_meals" method="post">
         <select name="meal_type" required>
-            <option value="breakfast">Breakfast</option>
-            <option value="breakfast_special">Breakfast Special</option>
-            <option value="lunch">Lunch</option>
-            <option value="lunch_special">Lunch Special</option>
-            <option value="noon">Noon</option>
-            <option value="noon_special">Noon Special</option>
-            <option value="dinner">Dinner</option>
-            <option value="dinner_special">Dinner Special</option>
+            <option value="breakfast" {% if selected_meal_type == "breakfast" %}selected{% endif %}>Breakfast</option>
+            <option value="breakfast_special" {% if selected_meal_type == "breakfast_special" %}selected{% endif %}>Breakfast Special</option>
+            <option value="lunch" {% if selected_meal_type == "lunch" %}selected{% endif %}>Lunch</option>
+            <option value="lunch_special" {% if selected_meal_type == "lunch_special" %}selected{% endif %}>Lunch Special</option>
+            <option value="noon" {% if selected_meal_type == "noon" %}selected{% endif %}>Noon</option>
+            <option value="noon_special" {% if selected_meal_type == "noon_special" %}selected{% endif %}>Noon Special</option>
+            <option value="dinner" {% if selected_meal_type == "dinner" %}selected{% endif %}>Dinner</option>
+            <option value="dinner_special" {% if selected_meal_type == "dinner_special" %}selected{% endif %}>Dinner Special</option>
         </select>
         <button type="submit">Generate 3 meal ideas.</button>
     </form>
