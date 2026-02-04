@@ -1,108 +1,94 @@
-{% extends "base.html" %}
-
-{% block title %}Meals database{% endblock %}
-
-{% block content %}
-<section class="card">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Meals database</title>
+</head>
+<body>
     <h1>Meals Database</h1>
-    <p class="muted">Add new meals or delete existing ones by category.</p>
-    <div class="form-grid">
-        <form action="/add_meal" method="post" class="form-card">
-            <h2>Add a meal</h2>
-            <div class="form-row">
-                <label for="meal_name">Meal name</label>
-                <input id="meal_name" type="text" name="meal_name" placeholder="Meal Name" required>
-            </div>
-            <div class="form-row">
-                <label for="meal_type">Meal type</label>
-                <select id="meal_type" name="meal_type" required>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="breakfast_special">Breakefast Special</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="lunch_special">Lunch Special</option>
-                    <option value="noon">Noon</option>
-                    <option value="noon_special">Noon Special</option>
-                    <option value="dinner">Dinner</option>
-                    <option value="dinner_special">Dinner Special</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Add Meal</button>
-        </form>
-
-        <form action="/delete_meal" method="post" class="form-card">
-            <h2>Delete a meal</h2>
-            <div class="form-row">
-                <label for="delete_meal_name">Meal name</label>
-                <input id="delete_meal_name" type="text" name="meal_name" placeholder="Meal Name to Delete" required>
-            </div>
-            <button type="submit" class="btn btn-danger">Delete Meal</button>
-        </form>
-    </div>
-</section>
-
-<section class="card">
-    <h2>Meal List</h2>
-    <p>Meals are categorized into different types:</p>
-    <ul class="pill-list">
-        <li>Breakfast</li>
-        <li>Breakfast Special</li>
-        <li>Lunch</li>
-        <li>Lunch Special</li>
-        <li>Noon</li>
-        <li>Noon Special</li>
-        <li>Dinner</li>
-        <li>Dinner Special</li>
-    </ul>
-
-    <div class="meal-grid">
+    <form action="/add_meal" method="post">
+        <input type="text" name="meal_name" placeholder="Meal Name" required>
+        <select name="meal_type" required>
+            <option value="breakfast">Breakfast</option>
+            <option value="breakfast_special">Breakefast Special</option>
+            <option value="lunch">Lunch</option>
+            <option value="lunch_special">Lunch Special</option>
+            <option value="noon">Noon</option>
+            <option value="noon_special">Noon Special</option>
+            <option value="dinner">Dinner</option>
+            <option value="dinner_special">Dinner Special</option>
+        </select>
+        <button type="submit">Add Meal</button>
+    </form>
+    <br>
+    <form action="/delete_meal" method="post">
+        <input type="text" name="meal_name" placeholder="Meal Name to Delete" required>
+        <button type="submit">Delete Meal</button>
+    </form>
+    <br>
+        <h2>Meal List</h2>
+        <p>Here you can edit the meal lists. Add new meals or modify existing ones.</p>
+        <p>Meals are categorized into different types:</p>
+        <ul>
+            <li>Breakfast</li>
+            <li>Breakfast Special</li>
+            <li>Lunch</li>
+            <li>Lunch Special</li>
+            <li>Noon</li>
+            <li>Noon Special</li>
+            <li>Dinner</li>
+            <li>Dinner Special</li>
+        </ul>
+    
+        <h3>Breakfast:</h3>
         <div>
-            <h3>Breakfast</h3>
             {% for meal in breakfast %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Breakfast Special:</h3>
         <div>
-            <h3>Breakfast Special</h3>
             {% for meal in breakfast_special %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Lunch:</h3>
         <div>
-            <h3>Lunch</h3>
             {% for meal in lunch %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Lunch Special:</h3>
         <div>
-            <h3>Lunch Special</h3>
             {% for meal in lunch_special %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Noon:</h3>
         <div>
-            <h3>Noon</h3>
             {% for meal in noon %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Noon Special:</h3>
         <div>
-            <h3>Noon Special</h3>
             {% for meal in noon_special %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Dinner:</h3>
         <div>
-            <h3>Dinner</h3>
             {% for meal in dinner %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
+        <h3>Dinner Special:</h3>
         <div>
-            <h3>Dinner Special</h3>
             {% for meal in dinner_special %}
                 <p>- {{ meal }}</p>
             {% endfor %}
         </div>
-    </div>
-</section>
-{% endblock %}
+    <br>
+    <a href="/">Back to start page</a>
+</body>
+</html>
