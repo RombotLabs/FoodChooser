@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <title>FoodChooser start page</title>
-    <form action="/random_meal" method="post">
-        <button type="submit">Generate 3 meal ideas.</button>
-    </form>
-    <form action="/meals_db" method="post">
-        <button type="submit">Edit the meal lists.</button>
-    </form>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}FoodChooser start page{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h1>Welcome to FoodChooser</h1>
+    <p class="muted">Pick a quick action to generate meals or manage your list.</p>
+    <div class="action-grid">
+        <form action="/random_meal" method="post" class="form-row">
+            <button type="submit" class="btn">Generate 3 meal ideas</button>
+        </form>
+        <form action="/meals_db" method="post" class="form-row">
+            <button type="submit" class="btn btn-secondary">Edit the meal lists</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
