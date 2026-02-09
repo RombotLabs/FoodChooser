@@ -2,15 +2,106 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>FoodChooser start page</title>
-    <form action="/random_meal" method="post">
-        <button type="submit">Generate 3 meal ideas.</button>
-    </form>
-    <form action="/meals_db" method="post">
-        <button type="submit">Edit the meal lists.</button>
-    </form>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodChooser - Startseite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 50px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>🍽️ FoodChooser</h1>
+        <p class="subtitle">Werde nie wieder unentschlossen bei der Mahlzeitenwahl!</p>
+        <div class="button-group">
+            <form action="/random_meal" method="post" style="width: 100%;">
+                <button type="submit" class="btn-primary">✨ Mahlzeitsideen generieren</button>
+            </form>
+            <form action="/meals_db" method="post" style="width: 100%;">
+                <button type="submit" class="btn-secondary">📝 Mahlzeiten verwalten</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

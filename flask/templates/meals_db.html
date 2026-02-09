@@ -2,93 +2,356 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Meals database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahlzeitendatenbank - FoodChooser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 1.05em;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        input, select {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            background-color: white;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        input:hover, select:hover {
+            border-color: #667eea;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .meals-list-section {
+            margin-top: 40px;
+        }
+
+        .meals-list-section h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+        }
+
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .meal-category {
+            background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f4 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .meal-category h3 {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meal-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #555;
+            border-left: 3px solid #764ba2;
+            font-weight: 500;
+        }
+
+        .meal-item:hover {
+            background: #f9f9f9;
+        }
+
+        .empty-message {
+            color: #999;
+            font-style: italic;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .nav-links {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+        }
+
+        a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .meals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Meals Database</h1>
-    <form action="/add_meal" method="post">
-        <input type="text" name="meal_name" placeholder="Meal Name" required>
-        <select name="meal_type" required>
-            <option value="breakfast">Breakfast</option>
-            <option value="breakfast_special">Breakefast Special</option>
-            <option value="lunch">Lunch</option>
-            <option value="lunch_special">Lunch Special</option>
-            <option value="noon">Noon</option>
-            <option value="noon_special">Noon Special</option>
-            <option value="dinner">Dinner</option>
-            <option value="dinner_special">Dinner Special</option>
-        </select>
-        <button type="submit">Add Meal</button>
-    </form>
-    <br>
-    <form action="/delete_meal" method="post">
-        <input type="text" name="meal_name" placeholder="Meal Name to Delete" required>
-        <button type="submit">Delete Meal</button>
-    </form>
-    <br>
-        <h2>Meal List</h2>
-        <p>Here you can edit the meal lists. Add new meals or modify existing ones.</p>
-        <p>Meals are categorized into different types:</p>
-        <ul>
-            <li>Breakfast</li>
-            <li>Breakfast Special</li>
-            <li>Lunch</li>
-            <li>Lunch Special</li>
-            <li>Noon</li>
-            <li>Noon Special</li>
-            <li>Dinner</li>
-            <li>Dinner Special</li>
-        </ul>
-    
-        <h3>Breakfast:</h3>
-        <div>
-            {% for meal in breakfast %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
+    <div class="container">
+        <h1>📋 Mahlzeitendatenbank</h1>
+        <p class="description">Verwalte deine Mahlzeitensammlung. Füge neue Mahlzeiten hinzu oder entferne diejenigen, die du nicht mehr möchtest.</p>
+
+        <div class="form-section">
+            <h2>➕ Neue Mahlzeit hinzufügen</h2>
+            <form action="/add_meal" method="post">
+                <div class="form-group">
+                    <input type="text" name="meal_name" placeholder="Gib den Mahlzeitennamen ein" required>
+                    <select name="meal_type" required>
+                        <option value="breakfast">🌅 Frühstück</option>
+                        <option value="breakfast_special">✨ Frühstück Spezial</option>
+                        <option value="lunch">🥗 Mittagessen</option>
+                        <option value="lunch_special">🌟 Mittagessen Spezial</option>
+                        <option value="noon">☀️ Mittags</option>
+                        <option value="noon_special">💫 Mittags Spezial</option>
+                        <option value="dinner">🍽️ Abendessen</option>
+                        <option value="dinner_special">👑 Abendessen Spezial</option>
+                    </select>
+                    <button type="submit">Mahlzeit hinzufügen</button>
+                </div>
+            </form>
         </div>
-        <h3>Breakfast Special:</h3>
-        <div>
-            {% for meal in breakfast_special %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
+
+        <div class="form-section">
+            <h2>🗑️ Mahlzeit entfernen</h2>
+            <form action="/delete_meal" method="post">
+                <div class="form-group">
+                    <input type="text" name="meal_name" placeholder="Gib den Namen der Mahlzeit zum Löschen ein" required>
+                    <button type="submit">Mahlzeit löschen</button>
+                </div>
+            </form>
         </div>
-        <h3>Lunch:</h3>
-        <div>
-            {% for meal in lunch %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
+
+        <div class="meals-list-section">
+            <h2>📚 Aktuelle Mahlzeitenliste</h2>
+            <div class="meals-grid">
+                <div class="meal-category">
+                    <h3>🌅 Frühstück</h3>
+                    <div class="meal-list">
+                        {% if breakfast %}
+                            {% for meal in breakfast %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>✨ Frühstück Spezial</h3>
+                    <div class="meal-list">
+                        {% if breakfast_special %}
+                            {% for meal in breakfast_special %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>🥗 Mittagessen</h3>
+                    <div class="meal-list">
+                        {% if lunch %}
+                            {% for meal in lunch %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>🌟 Mittagessen Spezial</h3>
+                    <div class="meal-list">
+                        {% if lunch_special %}
+                            {% for meal in lunch_special %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>☀️ Mittags</h3>
+                    <div class="meal-list">
+                        {% if noon %}
+                            {% for meal in noon %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>💫 Mittags Spezial</h3>
+                    <div class="meal-list">
+                        {% if noon_special %}
+                            {% for meal in noon_special %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>🍽️ Abendessen</h3>
+                    <div class="meal-list">
+                        {% if dinner %}
+                            {% for meal in dinner %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="meal-category">
+                    <h3>👑 Abendessen Spezial</h3>
+                    <div class="meal-list">
+                        {% if dinner_special %}
+                            {% for meal in dinner_special %}
+                                <div class="meal-item">{{ meal }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-message">Noch keine Mahlzeiten hinzugefügt</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>Lunch Special:</h3>
-        <div>
-            {% for meal in lunch_special %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
+
+        <div class="nav-links">
+            <a href="/">← Zurück zur Startseite</a>
         </div>
-        <h3>Noon:</h3>
-        <div>
-            {% for meal in noon %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
-        </div>
-        <h3>Noon Special:</h3>
-        <div>
-            {% for meal in noon_special %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
-        </div>
-        <h3>Dinner:</h3>
-        <div>
-            {% for meal in dinner %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
-        </div>
-        <h3>Dinner Special:</h3>
-        <div>
-            {% for meal in dinner_special %}
-                <p>- {{ meal }}</p>
-            {% endfor %}
-        </div>
-    <br>
-    <a href="/">Back to start page</a>
+    </div>
 </body>
 </html>

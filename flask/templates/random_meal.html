@@ -2,32 +2,203 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Random meal generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahlzeitengenerator - FoodChooser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            border-color: #667eea;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .results-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meals-container {
+            display: grid;
+            gap: 12px;
+        }
+
+        .meal-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f4 100%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: #333;
+            font-size: 1.05em;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .meal-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #e8ecff 0%, #e0e3ff 100%);
+        }
+
+        .no-meals {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        .nav-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        a:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Random Meal generator</h1>
-    <form action="/generate_meals" method="post" id="mealForm">
-        <select name="meal_type" id="mealTypeSelect" required>
-            <option value="breakfast">Breakfast</option>
-            <option value="breakfast_special">Breakfast Special</option>
-            <option value="lunch">Lunch</option>
-            <option value="lunch_special">Lunch Special</option>
-            <option value="noon">Noon</option>
-            <option value="noon_special">Noon Special</option>
-            <option value="dinner">Dinner</option>
-            <option value="dinner_special">Dinner Special</option>
-        </select>
-        <button type="submit">Generate 3 meal ideas.</button>
-    </form>
-    <br>
-    <h2>Generated Meal Ideas:</h2>
-    <div>
-        {% for meal in randomized_result %}
-            <p>- {{ meal }}</p>
-        {% endfor %}
+    <div class="container">
+        <h1>🎲 Mahlzeitengenerator</h1>
+        <form action="/generate_meals" method="post" id="mealForm">
+            <div class="form-group">
+                <label for="mealTypeSelect">Wähle eine Mahlzeitenkategorie:</label>
+                <select name="meal_type" id="mealTypeSelect" required>
+                    <option value="breakfast">🌅 Frühstück</option>
+                    <option value="breakfast_special">✨ Frühstück Spezial</option>
+                    <option value="lunch">🍗 Mittagessen</option>
+                    <option value="lunch_special">🌟 Mittagessen Spezial</option>
+                    <option value="noon">☀️ Mittags</option>
+                    <option value="noon_special">💬 Mittags Spezial</option>
+                    <option value="dinner">🍽️ Abendessen</option>
+                    <option value="dinner_special">👑 Abendessen Spezial</option>
+                </select>
+            </div>
+            <button type="submit">✨ 3 Mahlzeitsideen generieren</button>
+        </form>
+
+        {% if randomized_result %}
+        <div class="results-section">
+            <h2>🍯 Deine Mahlzeitsideen:</h2>
+            <div class="meals-container">
+                {% for meal in randomized_result %}
+                    {% if meal != "No meals available" %}
+                        <div class="meal-item">🍴 {{ meal }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% if "No meals available" in randomized_result %}
+                <p class="no-meals">Keine Mahlzeiten in dieser Kategorie verfügbar. Bitte füge zuerst einige Mahlzeiten hinzu!</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="nav-links">
+            <a href="/">← Zurück zur Startseite</a>
+        </div>
     </div>
-    <br>
-    <a href="/">Back to start page</a>
 
     <script>
         // Function to save the selected meal category to localStorage
