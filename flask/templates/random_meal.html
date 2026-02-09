@@ -6,8 +6,8 @@
 </head>
 <body>
     <h1>Random Meal generator</h1>
-    <form action="/generate_meals" method="post">
-        <select name="meal_type" required>
+    <form action="/generate_meals" method="post" id="mealForm">
+        <select name="meal_type" id="mealTypeSelect" required>
             <option value="breakfast">Breakfast</option>
             <option value="breakfast_special">Breakfast Special</option>
             <option value="lunch">Lunch</option>
@@ -28,5 +28,28 @@
     </div>
     <br>
     <a href="/">Back to start page</a>
+
+    <script>
+        // Function to save the selected meal category to localStorage
+        function saveMealCategory() {
+            const mealSelect = document.getElementById('mealTypeSelect');
+            localStorage.setItem('selectedMealCategory', mealSelect.value);
+        }
+
+        // Function to restore the saved meal category from localStorage
+        function restoreMealCategory() {
+            const mealSelect = document.getElementById('mealTypeSelect');
+            const savedCategory = localStorage.getItem('selectedMealCategory');
+            if (savedCategory) {
+                mealSelect.value = savedCategory;
+            }
+        }
+
+        // Save the category when the form is submitted
+        document.getElementById('mealForm').addEventListener('submit', saveMealCategory);
+
+        // Restore the category when the page loads
+        window.addEventListener('DOMContentLoaded', restoreMealCategory);
+    </script>
 </body>
 </html>
