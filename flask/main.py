@@ -3,7 +3,7 @@ import csv
 import os
 import random
 from dotenv import load_dotenv # pylint: disable=import-error
-from flask import Flask, render_template, redirect, request, session # pylint: disable=import-error
+from flask import Flask, render_template, redirect, request # pylint: disable=import-error
 
 
 load_dotenv()
@@ -85,15 +85,13 @@ def meals_db():
                            breakfast=breakfast, breakfast_special=breakfast_special,
                            lunch=lunch, lunch_special=lunch_special,
                            noon=noon, noon_special=noon_special,
-                           dinner=dinner, dinner_special=dinner_special,
-                           selected_meal_type=session.get("last_meal_type"))
+                           dinner=dinner, dinner_special=dinner_special)
 
 @app.route('/add_meal', methods=['GET', 'POST'])
 def add_meal():
     """The function for adding a meal to the database."""
     meal_type = request.form.get('meal_type')
     meal_name = request.form.get('meal_name')
-    session["last_meal_type"] = meal_type
     if meal_type == 'breakfast':
         breakfast.append(meal_name)
     elif meal_type == 'breakfast_special':
@@ -130,15 +128,12 @@ def delete_meal():
 @app.route('/random_meal', methods=['GET', 'POST'])
 def random_meal():
     """Random meal generator."""
-    return render_template("random_meal.html",
-                           randomized_result=randomized_result,
-                           selected_meal_type=session.get("last_meal_type"))
+    return render_template("random_meal.html", randomized_result=randomized_result)
 
 @app.route('/generate_meals', methods=['GET', 'POST'])
 def generate_meals():
     """Generate three random meals."""
     meal_type = request.form.get('meal_type')
-    session["last_meal_type"] = meal_type
     if meal_type == 'breakfast':
         randomize(breakfast)
     elif meal_type == 'breakfast_special':
